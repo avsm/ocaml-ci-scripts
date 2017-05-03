@@ -49,4 +49,5 @@ echo docker run --env-file=env.list -v ${OS}:/repo local-build travis-opam
 # run ci-opam with the local repo volume mounted
 chmod -R a+w $OS
 echo -en "travis_fold:end:prepare.ci\r"
+docker run --env-file=env.list -v ${OS}:/repo local-build ls -la
 docker run --env-file=env.list -v ${OS}:/repo local-build ci-opam
