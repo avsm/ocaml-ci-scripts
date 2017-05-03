@@ -185,6 +185,7 @@ with_fold "Prepare" (fun () ->
     let (/) = Filename.concat in
 
     let opam =
+      Printf.printf "pkg_name = %s\n%!" pkg_name;
       if Sys.file_exists (pkg_name ^ ".opam") then (pkg_name ^ ".opam")
       else if Sys.file_exists "opam"
            && Sys.is_directory "opam"
