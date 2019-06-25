@@ -91,6 +91,7 @@ case $opam_version in
 esac
 
 echo RUN opam upgrade -y >> Dockerfile
+echo RUN opam pin add -n travis-opam https://github.com/avsm/ocaml-ci-scripts.git >> Dockerfile
 echo RUN opam depext -ui travis-opam >> Dockerfile
 echo RUN cp '~/.opam/$(opam switch show)/bin/ci-opam' "~/" >> Dockerfile
 # Ensure that ocaml-config is definitely in the compiler (base) packages
