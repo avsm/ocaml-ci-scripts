@@ -15,18 +15,21 @@ hub_user=${HUB_USER:-$default_hub_user}
 opam_version=${OPAM_VERSION:-$default_opam_version}
 base_remote_branch=${BASE_REMOTE_BRANCH:-$default_base_remote_branch}
 
+opt_env() {
+  if [ "$1" != "" ]; then
+    echo $1="$1" >> env.list
+  else
+    echo Skipping blank variable $1
+  fi
+}
+
 # create env file
-echo PACKAGE="$PACKAGE" > env.list
-echo EXTRA_REMOTES="$EXTRA_REMOTES" >> env.list
-echo PINS="$PINS" >> env.list
-echo INSTALL="$INSTALL" >> env.list
-echo DEPOPTS="$DEPOPTS" >> env.list
-echo TESTS="$TESTS" >> env.list
-echo REVDEPS="$REVDEPS" >> env.list
-echo EXTRA_DEPS="$EXTRA_DEPS" >> env.list
-echo PRE_INSTALL_HOOK="$PRE_INSTALL_HOOK" >> env.list
-echo POST_INSTALL_HOOK="$POST_INSTALL_HOOK" >> env.list
+rm -f env.list
+for v in PACKAGE EXTRA_REMOTES PINS INSTALL DEPOPTS TESTS REVDEPS EXTRA_DEPS PRE_INSTALL_HOOK POST_INSTALL_HOOK; do
+  opt_env $v
+done
 echo $EXTRA_ENV >> env.list
+cat env.list
 
 # build a local image to trigger any ONBUILDs
 case $opam_version in
@@ -91,7 +94,6 @@ case $opam_version in
 esac
 
 echo RUN opam upgrade -y >> Dockerfile
-echo RUN opam pin add -n travis-opam https://github.com/avsm/ocaml-ci-scripts.git >> Dockerfile
 echo RUN opam depext -ui travis-opam >> Dockerfile
 echo RUN cp '~/.opam/$(opam switch show)/bin/ci-opam' "~/" >> Dockerfile
 # Ensure that ocaml-config is definitely in the compiler (base) packages

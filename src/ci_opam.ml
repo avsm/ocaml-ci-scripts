@@ -242,7 +242,6 @@ with_fold "Prepare" (fun () ->
     unset "TESTS";
     export "OPAMYES" "1";
     ?| "eval $(opam config env)";
-    ?|. "opam remote list";
     (* remotes *)
     let remotes =
       ?|> "opam remote list --short | grep -v default | tr \"\\n\" \" \""
