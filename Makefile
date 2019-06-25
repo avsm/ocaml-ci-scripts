@@ -1,10 +1,10 @@
 .PHONY: all clean
 
 all:
-	jbuilder build --dev
+	dune build
 
 clean:
-	jbuilder clean
+	dune clean
 
 push:
 	docker build . -t ocaml/ci-opam
