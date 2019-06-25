@@ -17,7 +17,10 @@ opam_version=${OPAM_VERSION:-$default_opam_version}
 base_remote_branch=${BASE_REMOTE_BRANCH:-$default_base_remote_branch}
 
 opt_env() {
-  if [ "$1" != "" ]; then
+  N=$1
+  echo debug: $1 ${!1}
+  echo debug2: $N ${!N}
+  if [ "${!1}" != "" ]; then
     echo $1="${!1}" >> env.list
   else
     echo Skipping blank variable $1
