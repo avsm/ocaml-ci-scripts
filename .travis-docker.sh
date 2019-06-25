@@ -1,6 +1,7 @@
-#!/bin/sh -e
+#!/usr/bin/env bash
 # To use this, run `opam travis --help`
 
+set -e
 fold_name="prepare"
 echo -en "travis_fold:start:$fold_name.ci\r"
 default_user=ocaml
@@ -17,7 +18,7 @@ base_remote_branch=${BASE_REMOTE_BRANCH:-$default_base_remote_branch}
 
 opt_env() {
   if [ "$1" != "" ]; then
-    echo $1="$1" >> env.list
+    echo $1="${!1}" >> env.list
   else
     echo Skipping blank variable $1
   fi
